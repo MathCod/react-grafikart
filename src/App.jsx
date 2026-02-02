@@ -1,72 +1,72 @@
-import { useState } from 'react'
+import { Checkbox } from "./components/forms/checkbox"
+import { ProductCategoryRow } from "./components/products/productCategoryRow"
+import { ProductRow } from "./components/products/productRow"
+//import { Input } from "./components/forms/input"
+import { useState } from "react"
 
-const title = 'Bonjour les gens'
-const todos = [
-  'Apprendre le React',
-  'Apprendre le NodeJS',
-  'Apprendre le GraphQL'
+
+const PRODUCTS = [
+    {category: "Fruits", price: "$1", stocked: true, name: "Apple"},
+    {category: "Fruits", price: "$1", stocked: true, name: "Dragonfruit"},
+    {category: "Fruits", price: "$2", stocked: false, name: "Passionfruit"},
+    {category: "Vegetables", price: "$2", stocked: true, name: "Spinach"},
+    {category: "Vegetables", price: "$4", stocked: false, name: "Pumpkin"},
+    {category: "Vegetables", price: "$1", stocked: true, name: "Peas"}
 ]
-
 
 function App() {
 
-  const [count, setCount] = useState(0)
+  const [showStockedOnly, setShowStockedOnly] = useState(false)
+  const [search, setSearch] = useState('')
 
-  const incrementCount = () => {
-    setCount(count + 1)
-  }
-  const decrementCount = () => {
-    setCount(count - 1)
+  return <div className="container my-3">
+    <SearchBar
+      search={search}
+      onSearchChange={setSearch}
+      showStockedOnly={showStockedOnly}
+      onStockedOnlyChange={setShowStockedOnly} />
+    <ProductTable products={PRODUCTS} />
+  </div>
+
+}
+
+function SearchBar ({showStockedOnly, onStockedOnlyChange, search, onSearchChange}) {
+  return <div>
+    <div className="mb-3">
+      <input value={search.text} onChange={onSearchChange} placeholder="Rechercher..." />
+      <Checkbox
+        id="stocked"
+        checked={showStockedOnly}
+        onChange={onStockedOnlyChange}
+        label="N'afficher que les produits en stock" />
+    </div>
+  </div> 
+}
+
+function ProductTable ({products}) {
+  const rows = []
+  let lastCategory = null
+
+  for (const product of products) {
+    if (product.category !== lastCategory) {
+      rows.push(<ProductCategoryRow key={product.category} name={product.category} />)
+    }
+    lastCategory = product.category
+    rows.push(<ProductRow product={product} key={product.name} />)
   }
 
-  const [person, setperson] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    age: 18
-  })
+  return <table className="table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prix</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows}
+    </tbody>
+  </table>
 
-  const incrementAge = () => {
-    setperson({...person, age: person.age + 1})
-  }
-  const decrementAge = () => {
-    setperson({...person, age: person.age - 1})
-  }
-
-  const handleClick = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    alert('Clic sur le titre effectué !')
-  }
-
-  const [value, setValue] = useState('')
-  const handleChange = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setValue(e.target.value)
-  }
-
-  return  <>
-            <h1 onClick={handleClick} className="title">{title}</h1>
-            <ul>
-              {todos.map(todo => (<li key={todo}>{todo}</li>))}
-            </ul>
-            <div className='count'>
-              <p>Compteur : {count}</p>
-              <button onClick={incrementCount}>Incrémenter</button>
-              <button onClick={decrementCount}>Décrémenter</button>
-            </div>
-            <div className='age'>
-              <p>Age de {person.firstName} {person.lastName} : {person.age}</p>
-              <button onClick={incrementAge}>Gagner une anée</button>
-              <button onClick={decrementAge}>Perdre une anée</button>
-            </div>
-            <div>
-              <form>
-                <input type='text' name='firstname' value={value} onChange={handleChange} />
-                <button>Envoyer</button>
-              </form>
-            </div>
-          </>
 }
 
 export default App
