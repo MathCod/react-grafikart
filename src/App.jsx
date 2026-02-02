@@ -2,83 +2,42 @@ import { Checkbox } from "./components/forms/checkbox"
 import { ProductCategoryRow } from "./components/products/productCategoryRow"
 import { ProductRow } from "./components/products/productRow"
 //import { Input } from "./components/forms/input"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-
-const PRODUCTS = [
-    {category: "Fruits", price: "$1", stocked: true, name: "Apple"},
-    {category: "Fruits", price: "$1", stocked: true, name: "Dragonfruit"},
-    {category: "Fruits", price: "$2", stocked: false, name: "Passionfruit"},
-    {category: "Vegetables", price: "$2", stocked: true, name: "Spinach"},
-    {category: "Vegetables", price: "$4", stocked: false, name: "Pumpkin"},
-    {category: "Vegetables", price: "$1", stocked: true, name: "Peas"}
-]
 
 function App() {
+  const [duration, setDuration] = useState(5)
+  const [secondsLeft, setSecondsLeft] = useState(duration)
 
-  const [showStockedOnly, setShowStockedOnly] = useState(false)
-  const [search, setSearch] = useState('')
-
-  const visibleProducts = PRODUCTS.filter(product => {
-    if (showStockedOnly && !product.stocked) {
-      return false
-    }
-    if (search && !product.name.includes(search)) {
-      return false
-    }
-    return true
-  })
-
-  return <div className="container my-3">
-    <SearchBar
-      search={search}
-      onSearchChange={setSearch}
-      showStockedOnly={showStockedOnly}
-      onStockedOnlyChange={setShowStockedOnly} />
-    <ProductTable products={visibleProducts} />
-  </div>
-
-}
-
-function SearchBar ({showStockedOnly, onStockedOnlyChange, search, onSearchChange}) {
-  return <div>
-    <div className="mb-3">
-      <input value={search}
-      onChange={e => onSearchChange(e.target.value)}
-      placeholder="Rechercher..." />
-      <Checkbox
-        id="stocked"
-        checked={showStockedOnly}
-        onChange={onStockedOnlyChange}
-        label="N'afficher que les produits en stock" />
-    </div>
-  </div> 
-}
-
-function ProductTable ({products}) {
-  const rows = []
-  let lastCategory = null
-
-  for (const product of products) {
-    if (product.category !== lastCategory) {
-      rows.push(<ProductCategoryRow key={product.category} name={product.category} />)
-    }
-    lastCategory = product.category
-    rows.push(<ProductRow product={product} key={product.name} />)
+  const handleChange = (v) => {
+    setDuration(v)
+    setSecondsLeft(v)
   }
 
-  return <table className="table">
-    <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Prix</th>
-      </tr>
-    </thead>
-    <tbody>
-      {rows}
-    </tbody>
-  </table>
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSecondsLeft(v => {
+        if (v <= 1) {
+          clearInterval(timer)
+          return 0
+        }
+        return v - 1
+      })
 
+    }, 1000)
+    return () => {
+      clearInterval(timer)
+    }
+  },[duration])
+
+  return <div className="vstack gap-2">
+    <input
+      value={duration}
+      onChange={e => handleChange(e.target.value)}
+      placeholder="Timer..." />
+      <p>Décompte : {secondsLeft}</p>
+    </div>
 }
+
 
 export default App
