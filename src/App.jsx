@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import { NavBar } from './NavBar'
+import { Slider } from './Slider'
 
 const title = 'Bonjour les gens'
 const todos = [
@@ -46,23 +46,30 @@ function App() {
     setValue(e.target.value)
   }
 
+  const handleSubmit = (e) => {
+  e.preventDefault();
+  console.log("Formulaire envoyé :", value);
+}
+
   return <>
+    <NavBar />
+    <Slider />
     <h1 onClick={handleClick} className="title">{title}</h1>
     <ul className="title container my-1">
       {todos.map(todo => (<li key={todo}>{todo}</li>))}
     </ul>
     <div className='count'>
       <p>Compteur : {count}</p>
-      <button className='container my-1' onClick={incrementCount}>Incrémenter</button>
-      <button className='container my-1' onClick={decrementCount}>Décrémenter</button>
+      <button className='btn btn-primary my-1' onClick={incrementCount}>Incrémenter</button>
+      <button className='btn btn-danger my-1' onClick={decrementCount}>Décrémenter</button>
     </div>
     <div className='age'>
       <p>Age de {person.firstName} {person.lastName} : {person.age}</p>
-      <button className='container my-1' onClick={incrementAge}>Gagner une anée</button>
-      <button className='container my-1' onClick={decrementAge}>Perdre une anée</button>
+      <button className='btn btn-primary my-1' onClick={incrementAge}>Gagner une anée</button>
+      <button className='btn btn-danger my-1' onClick={decrementAge}>Perdre une anée</button>
     </div>
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input className='container my-2' type='text' name='firstname' value={value} onChange={handleChange} />
         <button>Envoyer</button>
       </form>
