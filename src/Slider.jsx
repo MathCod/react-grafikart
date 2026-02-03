@@ -1,6 +1,6 @@
 export function Slider() {
     
-    return <div id="carouselExampleIndicators" className="carousel slide carousel-dark">
+    return <div id="carouselExampleIndicators" className="carousel slide">
       <div className="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -8,13 +8,13 @@ export function Slider() {
       </div>
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <img src="/slider-1.webp" className="d-block w-100" alt="Slider 1" />
-        </div>
-        <div className="carousel-item">
           <img src="/slider-2.webp" className="d-block w-100" alt="Slider 2" />
         </div>
         <div className="carousel-item">
           <img src="/slider-3.webp" className="d-block w-100" alt="Slider 3" />
+        </div>
+        <div className="carousel-item">
+          <img src="/slider-1.webp" className="d-block w-100" alt="Slider 1" />
         </div>
       </div>
       <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

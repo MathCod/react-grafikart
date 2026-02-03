@@ -70,7 +70,7 @@ function App() {
     </div>
     <div>
       <form onSubmit={handleSubmit}>
-        <input className='container my-2' type='text' name='firstname' value={value} onChange={handleChange} />
+        <input className='my-2' type='text' name='firstname' value={value} onChange={handleChange} />
         <button>Envoyer</button>
       </form>
     </div>
