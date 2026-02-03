@@ -46,22 +46,22 @@ function App() {
 
   return <>
     <h1 onClick={handleClick} className="title">{title}</h1>
-    <ul>
+    <ul className="title container my-1">
       {todos.map(todo => (<li key={todo}>{todo}</li>))}
     </ul>
     <div className='count'>
       <p>Compteur : {count}</p>
-      <button onClick={incrementCount}>Incrémenter</button>
-      <button onClick={decrementCount}>Décrémenter</button>
+      <button className='container my-1' onClick={incrementCount}>Incrémenter</button>
+      <button className='container my-1' onClick={decrementCount}>Décrémenter</button>
     </div>
     <div className='age'>
       <p>Age de {person.firstName} {person.lastName} : {person.age}</p>
-      <button onClick={incrementAge}>Gagner une anée</button>
-      <button onClick={decrementAge}>Perdre une anée</button>
+      <button className='container my-1' onClick={incrementAge}>Gagner une anée</button>
+      <button className='container my-1' onClick={decrementAge}>Perdre une anée</button>
     </div>
     <div>
       <form>
-        <input type='text' name='firstname' value={value} onChange={handleChange} />
+        <input className='container my-2' type='text' name='firstname' value={value} onChange={handleChange} />
         <button>Envoyer</button>
       </form>
     </div>
