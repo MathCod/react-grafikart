@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 
 
 function App() {
-  const [duration, setDuration] = useState(5)
+  const [duration, setDuration] = useState(10)
   const [secondsLeft, setSecondsLeft] = useState(duration)
 
   const handleChange = (v) => {
@@ -30,7 +30,7 @@ function App() {
     }
   },[duration])
 
-  return <div className="vstack gap-2">
+  return <div className="gap-2">
     <input
       value={duration}
       onChange={e => handleChange(e.target.value)}
@@ -38,6 +38,5 @@ function App() {
       <p>Décompte : {secondsLeft}</p>
     </div>
 }
-
 
 export default App
